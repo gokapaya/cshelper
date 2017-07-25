@@ -1,0 +1,49 @@
+{{ if .ShareName }}
+**Your giftee is:** /u/{{.Username}}
+{{else}}
+Your giftee has chosen to stay anonymous.
+{{ end }}
+{{ if .Watchlist }}
+**Your giftees watchlist:** {{ .Watchlist }}
+{{ end }}
+---
+**They are representing:** {{.RepSubreddit}}
+---
+**Your giftee's message to you:**
+
+{{.MessageToSanta}}
+
+---
+**Your giftee's shipping information:**
+
+**Name:** {{.Address.Fullname}}
+
+**Address:** {{.Address.Street1}}
+
+**Address 2:** {{.Address.Street2}}
+
+**City:** {{.Address.City}}
+
+**State/Province:** {{.Address.State}}
+
+**Country:** {{.Address.Country}}
+
+**Post/Zip Code:** {{.Address.Zipcode}}
+
+---
+
+After buying and shipping the gift, please send a modmail to /r/ClosetSanta with the proof of shipping. 
+If there is an issue, or you just have a general question, please reach out to the mods, or check
+the [post about the rematching](https://www.reddit.com/r/ClosetSanta/comments/5ivtee/another_status_update/).
+
+--- 
+
+**You are awesome** for sending out a second gift and making those happy that were left out of the fun on the first run.
+Thanks for signing up for 'Santa is a Closet Weeaboo's regifting round! 
+
+I hope you had amazing holidays and a happy new year so far.
+
+Keep your eyes on the sub for a little so you can catch your giftee posting pictures and a thank you message - you deserve it.
+Hope to see you next year again!
+
+~ The /r/ClosetSanta mod team

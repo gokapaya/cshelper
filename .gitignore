@@ -1,0 +1,7 @@
+*.protobuf
+glide.lock
+vendor/
+
+closetsanta
+*.db.bak
+*.csv
