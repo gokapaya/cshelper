@@ -3,6 +3,7 @@ package cmd
 import (
 	"os"
 
+	"github.com/gokapaya/cshelper/bot"
 	"github.com/gokapaya/cshelper/tmpl"
 	"github.com/gokapaya/cshelper/ulist"
 	"github.com/inconshreveable/log15"
@@ -11,6 +12,7 @@ import (
 
 type Config struct {
 	Debug bool
+	Bot   bot.Config
 }
 
 // initConfig reads in config file and ENV variables if set.
@@ -45,6 +47,7 @@ func initLogging() {
 	Log.SetHandler(log15.CallerFileHandler(Log.GetHandler()))
 
 	ulist.Log = Log.New("pkg", "ulist")
+	bot.Log = Log.New("pkg", "bot")
 	tmpl.Log = Log.New("pkg", "tmpl")
 }
 
@@ -54,4 +57,11 @@ func initUlist() {
 		os.Exit(1)
 	}
 	Log.Info("user list loaded", "len", ulist.GetAllUsers().Len())
+}
+
+func initBot() {
+	if err := bot.Init(&cfg.Bot); err != nil {
+		Log.Error("initializing bot failed", "err", err)
+		os.Exit(1)
+	}
 }
