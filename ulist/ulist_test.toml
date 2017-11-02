@@ -1,0 +1,38 @@
+[[user]]
+username = "test1"
+share_name = false
+agree_rules = true
+rep_subreddit = "/r/AraragiGirls"
+message_to_santa = "test1 test"
+watchlist = ""
+regift = true
+international = false
+
+[user.address]
+fullname = "Jon Doe"
+street1 = "Doestr. 1"
+street2 = ""
+city = "Doe City"
+state = "DX"
+country = "United States"
+zipcode = "00000"
+
+[[user]]
+username = "test2"
+share_name = true
+agree_rules = true
+rep_subreddit = "/r/Chuunibyou"
+message_to_santa = "test2 test"
+watchlist = ""
+regift = true
+international = true
+
+[user.address]
+fullname = "Hans Muster"
+street1 = "Musterstr. 1"
+street2 = ""
+city = "Musterhausen"
+state = "Musterland"
+country = "Germany"
+zipcode = "0000"
+
