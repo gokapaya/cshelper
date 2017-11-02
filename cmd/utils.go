@@ -3,6 +3,7 @@ package cmd
 import (
 	"os"
 
+	"github.com/gokapaya/cshelper/ulist"
 	"github.com/inconshreveable/log15"
 	"github.com/spf13/viper"
 )
@@ -41,4 +42,14 @@ func initLogging() {
 	}
 	Log.SetHandler(log15.LvlFilterHandler(maxLogLvl, Log.GetHandler()))
 	Log.SetHandler(log15.CallerFileHandler(Log.GetHandler()))
+
+	ulist.Log = Log.New("pkg", "ulist")
+}
+
+func initUlist() {
+	if err := ulist.Init(); err != nil {
+		Log.Error("initializing user list failed", "err", err)
+		os.Exit(1)
+	}
+	Log.Info("user list loaded", "len", ulist.GetAllUsers().Len())
 }
