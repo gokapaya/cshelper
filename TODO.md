@@ -2,11 +2,11 @@
 
 List of stuff that needs to be ported over from the old implementation.
 
-- [ ] parse google doc export on init
-- [ ] keep original export as backup
-- [ ] write toml list for emergency edits
+- [x] parse google doc export on init
+- [x] keep original export as backup
+- [x] write toml list for emergency edits
 
-- [ ] parse msg templates on init
+- [x] parse msg templates on init
   - [ ] custom frontmatter for reddit 'regarding' field
 - [ ] review templates:
   - [ ] welcome to the contest
@@ -15,8 +15,8 @@ List of stuff that needs to be ported over from the old implementation.
   - [ ] sorry no ship msg
   - [ ] rematcher welcome
 
-- [ ] new templates
-  - [ ] asking subs for participation
+- [-] new templates
+  - [x] asking subs for participation
 
 - [ ] matching
   - [ ] look at munkres algorithm http://csclab.murraystate.edu/~bob.pilgrim/445/munkres.html
@@ -25,7 +25,7 @@ List of stuff that needs to be ported over from the old implementation.
   - [ ] do not match with user from same represented sub
 
 - [-] reddit bot
-  - [ ] setup bot
+  - [x] setup bot
   - [ ] pm single user with msg template
   - [ ] pm batch with template
 
