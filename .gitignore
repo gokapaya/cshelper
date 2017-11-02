@@ -1,7 +1,9 @@
-*.protobuf
-glide.lock
 vendor/
+.cshelper/
 
-closetsanta
+cshelper
+
+*.orig
+*.protobuf
 *.db.bak
 *.csv
