@@ -7,24 +7,34 @@
 ## Features
 
 ```
-Usage: closetsanta [OPTIONS] COMMAND [arg...]
+Usage:
+  cshelper [flags]
+  cshelper [command]
+Available Commands:
+  help        Help about any command
+  match       Generate a list of pairings
+  pm          Send PMs to user(s)
+Flags:
+      --debug   print debug logs
+  -h, --help    help for cshelper
+```
 
-Options:
-  --db="./giftee.db"                   path to the giftee database
-  --useragent="./useragent.protobuf"   path to the reddit bot useragent
-  --templates="./templates"            path to the templates directory
+## Using
 
-Commands:
-  parse-csv            get the users from the Google docs CSV
-  parse-shipping-csv   get shipping status from csv
-  list-users           list all user in the database
-  print-user           print the data about a single user
-  cleanup              clean up data in the database (mainly for country names)
-  match                match users to each other
-  match-export         Save a CSV file with the matched pairs
-  pm-user              send a PM to a user
-  pm-batch             send PMs to users
-  pm-batch-csv         send PMs to users from a Pair CSV
-  pm-batch-rematch     send rematch PMs to users
-  pm-batch-shipping    send shipping status PMs to users
+To use `cshelper` you need to take a few steps of preparation:
+
+Create a file called `cshelper.toml` in a directory `.cshelper`:
+
+```
+debug = false
+
+[bot]
+useragent = ""
+username = ""
+password = ""
+clientId = ""
+clientSecret = ""
+```
+
+The bot configuration contains the same elements as described [here](https://github.com/turnage/graw/wiki/agent-files).
 ```
