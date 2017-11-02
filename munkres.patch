@@ -1,0 +1,13 @@
+diff --git a/munkres.go b/munkres.go
+index bbf54d3..91724a3 100644
+--- a/munkres.go
++++ b/munkres.go
+@@ -306,7 +306,7 @@ func (Step6) Compute(ctx *Context) (Step, bool) {
+ }
+ 
+ type RowCol struct {
+-	row, col int
++	Row, Col int
+ }
+ 
+ func (ctx *Context) String() string {

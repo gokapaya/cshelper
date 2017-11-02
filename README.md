@@ -37,4 +37,15 @@ clientSecret = ""
 ```
 
 The bot configuration contains the same elements as described [here](https://github.com/turnage/graw/wiki/agent-files).
+
+## Building
+
+`cshelper` relies on a modified version of [clphub/munkres](https://github.com/clyphub/munkres). The change is can be
+found in the [patch here](./munkres.patch).
+
+To patch the dependency in the vendor/ directory run the following commands:
+
+```
+$ dep ensure
+$ go generate && go build
 ```
