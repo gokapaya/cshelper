@@ -15,7 +15,6 @@ const defaultConfigPath = ".cshelper"
 
 // Config values used at runtime
 type Config struct {
-	Debug   bool
 	Bot bot.Config
 }
 
@@ -42,11 +41,12 @@ func initConfig(cmd *cobra.Command) {
 }
 
 func initLogging() {
-	if cfg.Debug {
+	if flagDebug {
 		maxLogLvl = log15.LvlDebug
 	} else {
-		maxLogLvl = log15.LvlWarn
+		maxLogLvl = log15.LvlInfo
 	}
+	Log.SetHandler(log15.StderrHandler)
 	Log.SetHandler(log15.LvlFilterHandler(maxLogLvl, Log.GetHandler()))
 	Log.SetHandler(log15.CallerFileHandler(Log.GetHandler()))
 
