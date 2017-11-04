@@ -101,7 +101,7 @@ func runPm(cmd *cobra.Command, args []string) {
 
 	var num int
 	err := sendMsgTo.Iter(func(i int, u ulist.User) error {
-		num += 1
+		num++
 		Log.Info("==> " + u.Username)
 
 		if !flagDryRun {
