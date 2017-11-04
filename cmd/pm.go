@@ -86,7 +86,7 @@ func runPm(cmd *cobra.Command, args []string) {
 	default:
 		sendMsgTo = ulist.GetAllUsers().Filter(func(ulu ulist.User) bool {
 			for _, u := range users {
-				if ulu.Username == u {
+				if ulist.CompareUsernames(ulu.Username, u) {
 					return true
 				}
 			}

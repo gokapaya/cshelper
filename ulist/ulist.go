@@ -66,7 +66,7 @@ func (ul *Ulist) Get(i int) *User {
 
 func (ul *Ulist) GetByName(name string) *User {
 	for _, u := range ul.users {
-		if u.Username == name {
+		if CompareUsernames(u.Username, name) {
 			return &u
 		}
 	}

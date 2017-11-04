@@ -2,6 +2,7 @@ package ulist
 
 import (
 	"fmt"
+	"strings"
 )
 
 // User represents a participant in the ClosetSanta
@@ -39,4 +40,8 @@ type Address struct {
 
 func (a *Address) String() string {
 	return fmt.Sprintf("%v\n%v\n%v\n%v %v\n%v %v", a.Fullname, a.Street1, a.Street2, a.Zipcode, a.City, a.State, a.Country)
+}
+
+func CompareUsernames(u1, u2 string) bool {
+	return strings.ToLower(u1) == strings.ToLower(u2)
 }

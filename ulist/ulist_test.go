@@ -51,7 +51,7 @@ func TestFilter(t *testing.T) {
 	})
 
 	result := ul.Filter(func(u User) bool {
-		return u.Username == "test1"
+		return CompareUsernames(u.Username, "test1")
 	})
 
 	assert.Equal(t, exp, result)
