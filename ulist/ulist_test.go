@@ -46,7 +46,7 @@ func TestGetByName(t *testing.T) {
 }
 
 func TestFilter(t *testing.T) {
-	var exp = *NewUlist([]User{
+	var exp = NewUlist([]User{
 		*ul.GetByName("test1"),
 	})
 
@@ -58,7 +58,7 @@ func TestFilter(t *testing.T) {
 }
 
 func TestGetByCountry(t *testing.T) {
-	var exp = *NewUlist([]User{
+	var exp = NewUlist([]User{
 		*ul.GetByName("test1"),
 	})
 
