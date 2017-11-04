@@ -4,6 +4,7 @@ import (
 	"os"
 	"testing"
 
+	"github.com/inconshreveable/log15"
 	"github.com/naoina/toml"
 	"github.com/stretchr/testify/assert"
 )
@@ -25,6 +26,7 @@ func setup() {
 
 func init() {
 	setup()
+	Log.SetHandler(log15.DiscardHandler())
 }
 
 func TestGetByName(t *testing.T) {

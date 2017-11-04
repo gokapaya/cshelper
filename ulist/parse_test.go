@@ -3,10 +3,12 @@ package ulist
 import (
 	"testing"
 
+	"github.com/inconshreveable/log15"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestParse(t *testing.T) {
+	Log.SetHandler(log15.DiscardHandler())
 	var exp = []User{
 		User{
 			Username: "test1", ShareName: false, AgreeRules: true,
