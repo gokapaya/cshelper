@@ -56,7 +56,7 @@ func initLogging() {
 }
 
 func initUlist() {
-	if err := ulist.Init(flagCsvListPath); err != nil {
+	if err := ulist.Init(flagCsvListPath, flagIgnore); err != nil {
 		Log.Error("initializing user list failed", "err", err)
 		os.Exit(1)
 	}

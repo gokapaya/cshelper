@@ -30,6 +30,7 @@ var (
 	maxLogLvl log15.Lvl
 
 	flagDebug       bool
+	flagIgnore      bool
 	flagCsvListPath string
 )
 
@@ -42,6 +43,7 @@ func Execute() {
 
 func init() {
 	RootCmd.PersistentFlags().BoolVar(&flagDebug, "debug", false, "print debug logs")
+	RootCmd.PersistentFlags().BoolVar(&flagIgnore, "ignore", false, "ignore ulist.toml, if found")
 	RootCmd.PersistentFlags().StringVar(&flagCsvListPath, "csv-path", filepath.Join(defaultConfigPath, defaultCsvListName), "path to the CSV list with the form results")
 	viper.BindPFlags(RootCmd.PersistentFlags())
 

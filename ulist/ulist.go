@@ -8,7 +8,7 @@ import (
 	"github.com/pkg/errors"
 )
 
-const TomlListPath = ".cshelper/ulist.toml"
+const tomlListPath = ".cshelper/ulist.toml"
 
 var (
 	allUsers = Ulist{}
@@ -27,17 +27,22 @@ type tomlUlist struct {
 	Users []User `toml:"user,omitempty"`
 }
 
-func Init(csvListPath string) error {
-	if _, err := os.Stat(TomlListPath); os.IsNotExist(err) {
-		// parse ulist from google form export
-		var err error
-		allUsers.users, err = ParseFile(csvListPath)
-		if err != nil {
-			return errors.Wrapf(err, "unable to parse %q", csvListPath)
-		}
-		return allUsers.Save(TomlListPath)
+func Init(csvListPath string, ignoreUlistToml bool) error {
+	// parse ulist from google form export
+	users, err := ParseFile(csvListPath)
+	if err != nil {
+		return errors.Wrapf(err, "unable to parse %q", csvListPath)
 	}
-	return allUsers.Load(TomlListPath)
+	allUsers = *NewUlist(users)
+
+	if ignoreUlistToml {
+		return err
+	}
+	Log.Crit("not stopping!!!")
+	if _, err := os.Stat(tomlListPath); os.IsNotExist(err) {
+		return allUsers.Save(tomlListPath)
+	}
+	return allUsers.Load(tomlListPath)
 }
 
 func GetAllUsers() *Ulist {
