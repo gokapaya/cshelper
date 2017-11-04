@@ -8,10 +8,7 @@ import (
 	"github.com/pkg/errors"
 )
 
-const (
-	csvListPath  string = ".cshelper/ulist.csv"
-	TomlListPath string = ".cshelper/ulist.toml"
-)
+const TomlListPath = ".cshelper/ulist.toml"
 
 var (
 	allUsers = Ulist{}
@@ -30,7 +27,7 @@ type tomlUlist struct {
 	Users []User `toml:"user,omitempty"`
 }
 
-func Init() error {
+func Init(csvListPath string) error {
 	if _, err := os.Stat(TomlListPath); os.IsNotExist(err) {
 		// parse ulist from google form export
 		var err error

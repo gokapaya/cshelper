@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"os"
+	"path/filepath"
 
 	"github.com/inconshreveable/log15"
 	"github.com/spf13/cobra"
@@ -20,11 +21,15 @@ We are active from around November to January.`,
 	},
 }
 
+const defaultCsvListName = "ulist.csv"
+
 var (
 	Log = log15.New()
 
 	cfg       Config
 	maxLogLvl log15.Lvl
+
+	flagCsvListPath string
 )
 
 func Execute() {
@@ -36,10 +41,13 @@ func Execute() {
 
 func init() {
 	RootCmd.PersistentFlags().Bool("debug", false, "print debug logs")
+	RootCmd.PersistentFlags().StringVar(&flagCsvListPath, "csv-path", filepath.Join(defaultConfigPath, defaultCsvListName), "path to the CSV list with the form results")
 	viper.BindPFlags(RootCmd.PersistentFlags())
 
 	RootCmd.PersistentPreRun = func(cmd *cobra.Command, args []string) {
-		initConfig()
 		initLogging()
+		initConfig(cmd)
+
+		Log.Debug("dumping config", "ignore", flagIgnore, "csv-list", flagCsvListPath)
 	}
 }

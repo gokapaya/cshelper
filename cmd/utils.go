@@ -7,19 +7,23 @@ import (
 	"github.com/gokapaya/cshelper/tmpl"
 	"github.com/gokapaya/cshelper/ulist"
 	"github.com/inconshreveable/log15"
+	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
 
+const defaultConfigPath = ".cshelper"
+
+// Config values used at runtime
 type Config struct {
-	Debug bool
-	Bot   bot.Config
+	Debug   bool
+	Bot bot.Config
 }
 
 // initConfig reads in config file and ENV variables if set.
-func initConfig() {
-	viper.SetConfigName("cshelper")
+func initConfig(cmd *cobra.Command) {
+	viper.SetConfigName("config")
 	viper.SetConfigType("toml")
-	viper.AddConfigPath(".cshelper")
+	viper.AddConfigPath(defaultConfigPath)
 
 	viper.AutomaticEnv() // read in environment variables that match
 
@@ -52,7 +56,7 @@ func initLogging() {
 }
 
 func initUlist() {
-	if err := ulist.Init(); err != nil {
+	if err := ulist.Init(flagCsvListPath); err != nil {
 		Log.Error("initializing user list failed", "err", err)
 		os.Exit(1)
 	}
