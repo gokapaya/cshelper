@@ -1,6 +1,7 @@
 package ulist
 
 import (
+	"io"
 	"net/url"
 	"os"
 	"path/filepath"
@@ -10,22 +11,22 @@ import (
 )
 
 type data struct {
-	Timestamp      string `csv:"timestamp"`
-	Username       string `csv:"username"`
-	ShareUsername  string `csv:"share_username"`
-	AgreeRules     string `csv:"agree_rules"`
-	Subreddit      string `csv:"subreddit"`
-	MessageToSanta string `csv:"message_to_santa"`
-	Watchlist      string `csv:"watchlist"`
-	Fullname       string `csv:"fullname"`
-	Street1        string `csv:"street_1"`
-	Street2        string `csv:"street_2"`
-	City           string `csv:"city"`
-	State          string `csv:"state"`
-	Country        string `csv:"country"`
-	Zipcode        string `csv:"zip"`
-	Rematcher      string `csv:"rematcher"`
-	ShipAbroad     string `csv:"ship_abroad"`
+	Timestamp      string `csv:"Timestamp"`
+	Username       string `csv:"What is your reddit username?"`
+	ShareUsername  string `csv:"Share Reddit Username with Santa"`
+	AgreeRules     string `csv:"Do you understand and agree to the rules of this gift exchange?"`
+	Subreddit      string `csv:"Subreddit to represent:"`
+	MessageToSanta string `csv:"Message to your Santa"`
+	Watchlist      string `csv:"Watchlist:"`
+	Fullname       string `csv:"Name:"`
+	Street1        string `csv:"Address:"`
+	Street2        string `csv:"Address 2:"`
+	City           string `csv:"City:"`
+	State          string `csv:"State/Province:"`
+	Country        string `csv:"Country:"`
+	Zipcode        string `csv:"Post/Zip Code:"`
+	Rematcher      string `csv:"Are you willing to be put down as a possible rematcher?"`
+	ShipAbroad     string `csv:"Are you willing to ship abroad?"`
 }
 
 func (d *data) toUser() (*User, error) {
@@ -68,6 +69,10 @@ func ParseFile(fpath string) ([]User, error) {
 	if err != nil {
 		return nil, errors.Wrapf(err, "unable to open %q", absFile)
 	}
+
+	gocsv.SetCSVReader(func(in io.Reader) gocsv.CSVReader {
+		return gocsv.LazyCSVReader(in)
+	})
 
 	var datas = []*data{}
 	if err := gocsv.UnmarshalFile(fd, &datas); err != nil {

@@ -40,5 +40,7 @@ func TestParse(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+
+	assert.Len(t, result, len(exp))
 	assert.Equal(t, result, exp)
 }
