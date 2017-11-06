@@ -18,18 +18,18 @@ List of stuff that needs to be ported over from the old implementation.
 - [-] new templates
   - [x] asking subs for participation
 
-- [ ] matching
-  - [ ] look at munkres algorithm http://csclab.murraystate.edu/~bob.pilgrim/445/munkres.html
-  - [ ] improve overseas / non-overseas algorithms
-  - [ ] create/export match list for ClosetSantaMessageBot (2-2 csv)
+- [-] matching
+  - [x] look at munkres algorithm http://csclab.murraystate.edu/~bob.pilgrim/445/munkres.html
+  - [x] improve overseas / non-overseas algorithms
+  - [ ] create/export match list for RSSB (2-2 csv)
   - [ ] do not match with user from same represented sub
 
 - [-] reddit bot
   - [x] setup bot
-  - [ ] pm single user with msg template
-  - [ ] pm batch with template
+  - [-] pm single user with msg template
+  - [-] pm batch with template
 
-** subcommands:
+### subcommands:
 
 - pm
   - needs to load ulist/templates
