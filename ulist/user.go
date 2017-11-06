@@ -1,8 +1,10 @@
 package ulist
 
 import (
+	"bytes"
 	"fmt"
 	"strings"
+	"text/template"
 )
 
 // User represents a participant in the ClosetSanta
@@ -17,6 +19,48 @@ type User struct {
 	Regift         bool
 	International  bool
 	match          string
+}
+
+func (u *User) String() string {
+	// const fmtString = `
+	// Username: {{ .Username }}
+	// RepSubreddit: {{ .RepSubreddit }}
+	// Watchlist: {{ .Watchlist }}
+	// MessageToSanta:
+	// ---
+	// {{ .MessageToSanta }}
+	// ---
+	// AgreeRules: {{ printf "%t" .AgreeRules }}, ShareName: {{ printf "%t" .ShareName }}
+	// Regift: {{ printf "%t" .Regift }}, International: {{ printf "%t" .International }}
+	// Address:
+	// ---
+	// {{ .Address.String }}
+	// ---
+	// `
+	const fmtString = `
+Username: {{ .Username }}
+  RepSubreddit: {{ .RepSubreddit }}
+  Watchlist: {{ .Watchlist }}
+  Address:
+---
+{{ .Address.String }}
+---
+  AgreeRules: {{ printf "%t" .AgreeRules }}
+  ShareName: {{ printf "%t" .ShareName }}
+  Regift: {{ printf "%t" .Regift }}
+  International: {{ printf "%t" .International }}
+  MessageToSanta:
+--
+{{ .MessageToSanta }}
+---
+`
+	t := template.Must(template.New("fmt").Parse(fmtString))
+
+	var buf bytes.Buffer
+	if err := t.Execute(&buf, u); err != nil {
+		panic(err)
+	}
+	return buf.String()
 }
 
 func (u *User) GetMatch(ulist []User) *User {

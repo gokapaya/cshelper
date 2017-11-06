@@ -14,6 +14,8 @@
 package cmd
 
 import (
+	"fmt"
+
 	"github.com/gokapaya/cshelper/ulist"
 	"github.com/spf13/cobra"
 )
@@ -26,8 +28,13 @@ var listCmd = &cobra.Command{
 	Run:   runList,
 }
 
+var (
+	flagLong bool
+)
+
 func init() {
 	RootCmd.AddCommand(listCmd)
+	listCmd.Flags().BoolVar(&flagLong, "long", false, "print full details about each user")
 
 	listCmd.PreRun = func(cmd *cobra.Command, args []string) {
 		initUlist()
@@ -37,10 +44,12 @@ func init() {
 func runList(cmd *cobra.Command, args []string) {
 	ul := ulist.GetAllUsers()
 
-	Log.Info("listing users")
-	ul.Iter(func(i int, u ulist.User) error {
-		Log.Info("==> " + u.Username)
+	ul.Iter(func(_ int, u ulist.User) error {
+		if flagLong {
+			fmt.Println("======", u.String())
+		} else {
+			fmt.Println(u.Username)
+		}
 		return nil
 	})
-	Log.Info("finished", "total", ul.Len())
 }

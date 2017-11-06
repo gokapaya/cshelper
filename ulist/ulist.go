@@ -38,7 +38,6 @@ func Init(csvListPath string, ignoreUlistToml bool) error {
 	if ignoreUlistToml {
 		return err
 	}
-	Log.Crit("not stopping!!!")
 	if _, err := os.Stat(tomlListPath); os.IsNotExist(err) {
 		return allUsers.Save(tomlListPath)
 	}
