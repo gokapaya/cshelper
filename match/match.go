@@ -18,8 +18,8 @@ type Pair struct {
 }
 
 type data struct {
+	Giftee string `csv:"user"`
 	Santa  string `csv:"santa"`
-	Giftee string `csv:"giftee"`
 }
 
 // Match takes a list of Users and returns Pairs of Santa and Giftee
