@@ -7,16 +7,19 @@
 ## Features
 
 ```
-Usage:
-  cshelper [flags]
-  cshelper [command]
 Available Commands:
   help        Help about any command
+  list        Print the list of users parsed from the CSV file
   match       Generate a list of pairings
   pm          Send PMs to user(s)
+
 Flags:
-      --debug   print debug logs
-  -h, --help    help for cshelper
+      --csv-path string   path to the CSV list with the form results (default ".cshelper/ulist.csv")
+      --debug             print debug logs
+  -h, --help              help for cshelper
+      --ignore            ignore ulist.toml, if found
+
+Use "cshelper [command] --help" for more information about a command.
 ```
 
 ## Using
