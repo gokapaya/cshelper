@@ -69,9 +69,8 @@ func runMatch(cmd *cobra.Command, args []string) {
 	}
 	Log.Info("evaluation successful")
 
-	if err := match.SavePairings(defaultFlagOutput, p); err != nil {
+	if err := match.SavePairings(flagOutput, p); err != nil {
 		Log.Error("saving pairlist failed", "err", err)
 		os.Exit(1)
 	}
-	Log.Info("pair csv saved", "file", defaultFlagOutput)
 }
