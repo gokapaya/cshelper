@@ -4,6 +4,7 @@ import (
 	"os"
 
 	"github.com/gokapaya/cshelper/bot"
+	"github.com/gokapaya/cshelper/match"
 	"github.com/gokapaya/cshelper/tmpl"
 	"github.com/gokapaya/cshelper/ulist"
 	"github.com/inconshreveable/log15"
@@ -53,6 +54,7 @@ func initLogging() {
 	ulist.Log = Log.New("pkg", "ulist")
 	bot.Log = Log.New("pkg", "bot")
 	tmpl.Log = Log.New("pkg", "tmpl")
+	match.Log = Log.New("pkg", "match")
 }
 
 func initUlist() {

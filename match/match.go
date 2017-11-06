@@ -9,8 +9,11 @@ import (
 	"github.com/clyphub/munkres"
 	"github.com/gocarina/gocsv"
 	"github.com/gokapaya/cshelper/ulist"
+	"github.com/inconshreveable/log15"
 	"github.com/pkg/errors"
 )
+
+var Log = log15.New()
 
 type Pair struct {
 	Santa  *ulist.User
@@ -24,6 +27,7 @@ type data struct {
 
 // Match takes a list of Users and returns Pairs of Santa and Giftee
 func Match(ul *ulist.Ulist) ([]Pair, error) {
+	Log.Info("matching users")
 	if ul.Len() < 2 {
 		return nil, errors.New("user list has < 2 entries")
 	}
@@ -47,6 +51,7 @@ func Match(ul *ulist.Ulist) ([]Pair, error) {
 		return cost
 	})
 
+	Log.Debug("running munkres")
 	result := munkres.ComputeMunkresMin(m)
 	// m.Print()
 	// printRowCol(ul, result)
@@ -62,6 +67,7 @@ func Match(ul *ulist.Ulist) ([]Pair, error) {
 }
 
 func costMatrix(ul *ulist.Ulist, costFn func(ulist.User, ulist.User) int64) []int64 {
+	Log.Debug("calculating cost matrix", "total_users", ul.Len())
 	var m = make([][]int64, ul.Len())
 
 	ul.Iter(func(i int, a ulist.User) error {
@@ -96,10 +102,12 @@ func matrixToSlice(matrix [][]int64) []int64 {
 
 // Eval takes a []Pair and evaluates it agains a set of rules.
 func Eval(pairings []Pair) error {
+	Log.Debug("running pair evalutation")
 	for _, p := range pairings {
 		// check not same name
 
 		if p.Santa.Username == p.Giftee.Username {
+			Log.Warn("evaluation failed")
 			return errors.Errorf("same person\n\n%s == %s", p.Santa.Username, p.Giftee.Username)
 		}
 
@@ -108,10 +116,12 @@ func Eval(pairings []Pair) error {
 				p.Santa.Address.Country,
 				p.Giftee.Address.Country,
 			) {
+				Log.Warn("evaluation failed")
 				return errors.Errorf("santa doesn't want international but has to send out of his region\n\nSanta's country: %s\nGiftee's country: %s", p.Santa.Address.Country, p.Giftee.Address.Country)
 			}
 		}
 	}
+	Log.Info("evaluation successful")
 	return nil
 }
 
@@ -126,6 +136,7 @@ func printRowCol(ul *ulist.Ulist, result []munkres.RowCol) {
 }
 
 func SavePairings(fpath string, pairings []Pair) error {
+	defer Log.Info("pair csv saved", "file", fpath)
 	// save .csv file
 	fd, err := os.OpenFile(fpath, os.O_CREATE|os.O_RDWR, os.ModePerm)
 	if err != nil {
@@ -139,6 +150,7 @@ func SavePairings(fpath string, pairings []Pair) error {
 }
 
 func LoadPairings(fpath string, ul ulist.Ulist) ([]Pair, error) {
+	defer Log.Info("pair csv loaded", "file", fpath)
 	fd, err := os.Open(fpath)
 	if err != nil {
 		return nil, errors.Wrapf(err, "unable to open %q for reading", fpath)

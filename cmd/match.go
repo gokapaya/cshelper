@@ -58,7 +58,6 @@ func runMatch(cmd *cobra.Command, args []string) {
 		Log.Info("filtered user list", "len", ul.Len())
 	}
 
-	Log.Info("matching users")
 	p, err := match.Match(ul)
 	if err != nil {
 		Log.Error("matching failed", "err", err)
@@ -67,7 +66,6 @@ func runMatch(cmd *cobra.Command, args []string) {
 	if err := match.Eval(p); err != nil {
 		Log.Error("evaluating the pairings failed", "err", err)
 	}
-	Log.Info("evaluation successful")
 
 	if err := match.SavePairings(flagOutput, p); err != nil {
 		Log.Error("saving pairlist failed", "err", err)
