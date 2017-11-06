@@ -60,7 +60,7 @@ func initUlist() {
 		Log.Error("initializing user list failed", "err", err)
 		os.Exit(1)
 	}
-	Log.Info("user list loaded", "len", ulist.GetAllUsers().Len())
+	Log.Debug("user list loaded", "len", ulist.GetAllUsers().Len())
 }
 
 func initBot() {
