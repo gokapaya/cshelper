@@ -9,25 +9,27 @@ List of stuff that needs to be ported over from the old implementation.
 - [x] parse msg templates on init
   - [ ] custom frontmatter for reddit 'regarding' field
 - [ ] review templates:
-  - [ ] welcome to the contest
-  - [ ] matched msg
-  - [ ] shipping status msg
+  - [ ] welcome to the contest/match msg
+    - ship as gift
+    - explain message bot
+  - [ ] gift on the way msg
   - [ ] sorry no ship msg
   - [ ] rematcher welcome
 
-- [-] new templates
-  - [x] asking subs for participation
-
-- [-] matching
+- [ ] matching
   - [x] look at munkres algorithm http://csclab.murraystate.edu/~bob.pilgrim/445/munkres.html
   - [x] improve overseas / non-overseas algorithms
-  - [ ] create/export match list for RSSB (2-2 csv)
+  - [x] create/export match list for RSSB (2-2 csv)
   - [ ] do not match with user from same represented sub
 
-- [-] reddit bot
+- [ ] reddit bot
   - [x] setup bot
-  - [-] pm single user with msg template
-  - [-] pm batch with template
+  - [x] pm single user with msg template
+  - [ ] pm batch with template
+
+- [x] additional documents
+  - [x] template: asking subs for participation
+  - [x] list of subs to contact
 
 ### subcommands:
 
