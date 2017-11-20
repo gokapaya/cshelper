@@ -1,7 +1,5 @@
 # cshelper
 
-### WARNING! Under construction.
-
 `cshelper` helps us organize the secret santa over on [/r/ClosetSanta](https://reddit.com/r/closetsanta).
 
 ## Features
@@ -29,8 +27,6 @@ To use `cshelper` you need to take a few steps of preparation:
 Create a file called `cshelper.toml` in a directory `.cshelper`:
 
 ```
-debug = false
-
 [bot]
 useragent = ""
 username = ""
