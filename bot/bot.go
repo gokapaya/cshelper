@@ -40,10 +40,9 @@ func Init(cfg *Config) error {
 	return nil
 }
 
-func PmUserWithTemplate(user ulist.User, t *template.Template) error {
+func PmUserWithTemplate(user ulist.User, subject string, t *template.Template) error {
 	var (
-		subject string = "/r/ClosetSanta notification"
-		body    string
+		body string
 	)
 
 	var buf bytes.Buffer

@@ -8,6 +8,7 @@ type Config struct {
 	Password     string
 }
 
+const DefaultSubject = "/r/ClosetSanta notification"
 const footnote = `
 ---
 This bot is maintained by /u/gokapaya  

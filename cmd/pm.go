@@ -39,12 +39,14 @@ The app will ask for confirmation before sending anything.`,
 var (
 	flagDryRun    bool
 	flagTempl     string
+	flagPmSubject string
 )
 
 func init() {
 	RootCmd.AddCommand(pmCmd)
 	pmCmd.Flags().BoolVarP(&flagDryRun, "dry-run", "n", false, "just print what will be done. Don't actually send messages")
 	pmCmd.Flags().StringVarP(&flagTempl, "template", "t", "", "path to template for PMs")
+	pmCmd.Flags().StringVar(&flagPmSubject, "subject", bot.DefaultSubject, "template for PMs")
 
 	pmCmd.PreRun = func(cmd *cobra.Command, args []string) {
 		if flagTempl == "" {
@@ -97,7 +99,7 @@ func runPm(cmd *cobra.Command, args []string) {
 
 		if !flagDryRun {
 			// do stuff
-			if err := bot.PmUserWithTemplate(u, t); err != nil {
+			if err := bot.PmUserWithTemplate(u, flagPmSubject, t); err != nil {
 				Log.Error("sending message failed", "err", err)
 			}
 		}
