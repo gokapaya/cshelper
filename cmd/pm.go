@@ -15,6 +15,7 @@ package cmd
 
 import (
 	"fmt"
+	"html/template"
 	"os"
 
 	"github.com/gokapaya/cshelper/bot"
@@ -40,6 +41,7 @@ var (
 	flagDryRun    bool
 	flagTempl     string
 	flagPmSubject string
+	flagPmSub     bool
 )
 
 func init() {
@@ -47,6 +49,7 @@ func init() {
 	pmCmd.Flags().BoolVarP(&flagDryRun, "dry-run", "n", false, "just print what will be done. Don't actually send messages")
 	pmCmd.Flags().StringVarP(&flagTempl, "template", "t", "", "path to template for PMs")
 	pmCmd.Flags().StringVar(&flagPmSubject, "subject", bot.DefaultSubject, "template for PMs")
+	pmCmd.Flags().BoolVar(&flagPmSub, "subreddit", false, "send to a subreddit instead. Ignores the ulist")
 
 	pmCmd.PreRun = func(cmd *cobra.Command, args []string) {
 		if flagTempl == "" {
@@ -69,6 +72,14 @@ func runPm(cmd *cobra.Command, args []string) {
 	if t == nil {
 		Log.Warn("no template found", "name", flagTempl)
 		os.Exit(1)
+	}
+
+	if flagPmSub {
+		if err := runPmSub(t, args); err != nil {
+			Log.Error("failure sending pm to subreddit", "err", err)
+			os.Exit(1)
+		}
+		os.Exit(0)
 	}
 
 	var sendMsgTo *ulist.Ulist
@@ -110,7 +121,30 @@ func runPm(cmd *cobra.Command, args []string) {
 		Log.Error("failure when iterating over user list", "err", err)
 		os.Exit(1)
 	}
-	Log.Info("sent all messages", "total", num)
+	Log.Info("finished", "total_sent", num)
+}
+
+func runPmSub(t *template.Template, subs []string) error {
+	Log.Info("sending message to subreddits", "total", len(subs))
+	if !ok() {
+		os.Exit(2)
+	}
+
+	var num int
+	for _, s := range subs {
+		sub := bot.NewSubreddit(s)
+		Log.Info("==> " + sub.Name())
+
+		if !flagDryRun {
+			if err := bot.PmSubredditWithTemplate(sub, flagPmSubject, t); err != nil {
+				Log.Error("sending message failed", "err", err)
+				continue
+			}
+			num++
+		}
+	}
+	Log.Info("finished", "total_sent", num)
+	return nil
 }
 
 func ok() bool {

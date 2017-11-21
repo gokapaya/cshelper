@@ -2,6 +2,7 @@ package bot
 
 import (
 	"bytes"
+	"fmt"
 	"html/template"
 
 	"github.com/gokapaya/cshelper/ulist"
@@ -59,4 +60,43 @@ func PmUserWithTemplate(user ulist.User, subject string, t *template.Template) e
 
 	Log.Debug("sending message", "re", subject)
 	return bot.SendMessage(user.Username, subject, body)
+}
+
+type Subreddit struct {
+	rawName string
+}
+
+func NewSubreddit(name string) Subreddit {
+	return Subreddit{rawName: name}
+}
+func (sub Subreddit) Name() string {
+	return fmt.Sprintf("/r/%s", sub.rawName)
+}
+func PmSubredditWithTemplate(sub Subreddit, subject string, t *template.Template) error {
+	var (
+		body string
+		err  error
+	)
+
+	body, err = renderTemplate(t, sub)
+	if err != nil {
+		return err
+	}
+
+	Log.Debug("sending message", "re", subject)
+	return bot.SendMessage(sub.Name(), subject, body)
+}
+
+func renderTemplate(t *template.Template, data interface{}) (string, error) {
+	var buf bytes.Buffer
+	if err := t.Execute(&buf, data); err != nil {
+		Log.Debug("dumping template", "t", t)
+		Log.Debug("dumping data", "data", data)
+		return "", errors.Wrap(err, "rendering template failed")
+	}
+
+	if _, err := buf.WriteString(footnote); err != nil {
+		return "", errors.Wrap(err, "writing footnote failed")
+	}
+	return buf.String(), nil
 }
