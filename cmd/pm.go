@@ -37,25 +37,16 @@ The app will ask for confirmation before sending anything.`,
 }
 
 var (
-	flagListTempl bool
 	flagDryRun    bool
 	flagTempl     string
 )
 
 func init() {
 	RootCmd.AddCommand(pmCmd)
-	pmCmd.Flags().BoolVar(&flagListTempl, "list-templates", false, "list available templates")
 	pmCmd.Flags().BoolVarP(&flagDryRun, "dry-run", "n", false, "just print what will be done. Don't actually send messages")
-	pmCmd.Flags().StringVarP(&flagTempl, "template", "t", "", "template for PMs")
+	pmCmd.Flags().StringVarP(&flagTempl, "template", "t", "", "path to template for PMs")
 
 	pmCmd.PreRun = func(cmd *cobra.Command, args []string) {
-		tmpl.Load()
-
-		if flagListTempl {
-			tmpl.List()
-			os.Exit(0)
-		}
-
 		if flagTempl == "" {
 			Log.Warn("no template found", "file", flagTempl)
 			os.Exit(1)

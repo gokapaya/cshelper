@@ -8,37 +8,20 @@ import (
 )
 
 var (
-	Log  = log15.New()
-	tmpl = template.New("global")
+	Log = log15.New()
 )
 
-func Load() {
-	var (
-		rootDir = "./doc"
-	)
-	Log.Debug("walking tree for templates", "root", rootDir)
-
-	docDir, err := filepath.Abs(rootDir)
+func Lookup(name string) *template.Template {
+	path, err := filepath.Abs(name)
 	if err != nil {
 		Log.Error("unable to get absolute doc path", "err", err)
-		return
+		return nil
 	}
 
-	tmpl, err = template.ParseGlob(filepath.Join(docDir, "*.tmpl"))
+	t, err := template.ParseFiles(path)
 	if err != nil {
-		Log.Error("unable to parse template files")
-		return
+		Log.Error("error parsing template", "err", err)
+		return nil
 	}
-}
-
-func List() {
-	Log.Info("listing registered templates")
-	for _, t := range tmpl.Templates() {
-		println(t.Name())
-	}
-}
-
-func Lookup(name string) *template.Template {
-	Log.Warn("this is a naive implementation")
-	return tmpl.Lookup(name)
+	return t
 }
