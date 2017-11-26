@@ -41,6 +41,7 @@ var ul = ulist.NewUlist([]ulist.User{
 })
 
 func TestMatching(t *testing.T) {
+	outputCostMatrixAndMatchMatrix = true
 	pairings, err := Match(ul)
 
 	assert.Nil(t, err)

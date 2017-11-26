@@ -15,6 +15,7 @@ import (
 )
 
 var Log = log15.New()
+var outputCostMatrixAndMatchMatrix bool
 
 type Pair struct {
 	Santa  *ulist.User
@@ -59,8 +60,11 @@ func Match(ul *ulist.Ulist) ([]Pair, error) {
 
 	Log.Debug("running munkres")
 	result := munkres.ComputeMunkresMin(m)
-	// m.Print()
-	// printRowCol(ul, result)
+
+	if outputCostMatrixAndMatchMatrix {
+		m.Print()
+		printRowCol(ul, result)
+	}
 
 	var pairs = make([]Pair, 0)
 	for _, rowcol := range result {
