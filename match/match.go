@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math/rand"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/clyphub/munkres"
@@ -34,9 +35,14 @@ func Match(ul *ulist.Ulist) ([]Pair, error) {
 
 	m := munkres.NewMatrix(ul.Len())
 	m.A = costMatrix(ul, func(santa, giftee ulist.User) int64 {
-		var cost int64 = 0
-		if santa.Username == giftee.Username {
+		var cost int64
+
+		if strings.EqualFold(santa.Username, giftee.Username) {
 			cost += 100
+		}
+
+		if strings.EqualFold(santa.RepSubreddit, giftee.RepSubreddit) {
+			cost += 90
 		}
 
 		if !santa.International {
@@ -106,9 +112,14 @@ func Eval(pairings []Pair) error {
 	for _, p := range pairings {
 		// check not same name
 
-		if p.Santa.Username == p.Giftee.Username {
+		if strings.EqualFold(p.Santa.Username, p.Giftee.Username) {
 			Log.Warn("evaluation failed")
-			return errors.Errorf("same person\n\n%s == %s", p.Santa.Username, p.Giftee.Username)
+			return errors.Errorf("same person\n%s == %s", p.Santa.Username, p.Giftee.Username)
+		}
+
+		if strings.EqualFold(p.Santa.RepSubreddit, p.Giftee.RepSubreddit) {
+			Log.Warn("evalutation failed")
+			return errors.Errorf("same subreddit\n%s == %s", p.Santa.RepSubreddit, p.Giftee.RepSubreddit)
 		}
 
 		if !p.Santa.International {
@@ -117,7 +128,7 @@ func Eval(pairings []Pair) error {
 				p.Giftee.Address.Country,
 			) {
 				Log.Warn("evaluation failed")
-				return errors.Errorf("santa doesn't want international but has to send out of his region\n\nSanta's country: %s\nGiftee's country: %s", p.Santa.Address.Country, p.Giftee.Address.Country)
+				return errors.Errorf("santa doesn't want international but has to send out of his region\nSanta's country: %s\nGiftee's country: %s", p.Santa.Address.Country, p.Giftee.Address.Country)
 			}
 		}
 	}
