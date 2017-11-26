@@ -98,6 +98,9 @@ func runPm(cmd *cobra.Command, args []string) {
 		})
 	}
 
+	if flagDryRun {
+		Log.Info("running dry...")
+	}
 	Log.Info("sending messages to users", "total", sendMsgTo.Len(), "template", t.Name())
 	if !ok() {
 		os.Exit(2)
@@ -125,6 +128,9 @@ func runPm(cmd *cobra.Command, args []string) {
 }
 
 func runPmSub(t *template.Template, subs []string) error {
+	if flagDryRun {
+		Log.Info("running dry...")
+	}
 	Log.Info("sending message to subreddits", "total", len(subs))
 	if !ok() {
 		os.Exit(2)
@@ -149,7 +155,7 @@ func runPmSub(t *template.Template, subs []string) error {
 
 func ok() bool {
 	var yesno string
-	fmt.Print("Are you sure? (y/n) ")
+	fmt.Print("Send messages? (y/n) ")
 	_, err := fmt.Scanf("%s", &yesno)
 	if err != nil {
 		Log.Error("error getting input", "err", err)
