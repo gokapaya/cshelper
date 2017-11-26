@@ -1,6 +1,8 @@
 package ulist
 
 import (
+	"net"
+	"net/http"
 	"os"
 	"strings"
 
@@ -10,7 +12,20 @@ import (
 var infoClient *country_mapper.CountryInfoClient
 
 func init() {
-	cl, err := country_mapper.Load()
+	const (
+		ipport = "127.0.0.1:25688"
+		loc    = "vendor/github.com/pirsquare/country-mapper/files"
+	)
+	l, err := net.Listen("tcp", ipport)
+	if err != nil {
+		panic(err)
+	}
+	defer l.Close()
+	go func(l net.Listener) {
+		http.Serve(l, http.FileServer(http.Dir(loc)))
+	}(l)
+
+	cl, err := country_mapper.Load("http://" + ipport + "/country_info.csv")
 	if err != nil {
 		Log.Crit("unable to load country_mapper data", "err", err)
 		os.Exit(1)
