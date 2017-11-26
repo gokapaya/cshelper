@@ -11,6 +11,5 @@ type Config struct {
 const DefaultSubject = "/r/ClosetSanta notification"
 const footnote = `
 ---
-This bot is maintained by /u/gokapaya  
-The source code is available at [github](https://github.com/gokapaya/cshelper)
+^(This bot is maintained by /u/gokapaya | The source code is available at) [^github](https://github.com/gokapaya/cshelper)
 `
